@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.itcast.f_hbm_oneToMany">
+	
+	<class name="Department" table="department">
+		<id name="id">
+        	<generator class="native"></generator>
+		</id>
+		<property name="name"/>
+		
+		<!-- employees属性，Set集合，表达的是本类与Employee的一对多 
+			class属性：关联的实体类型
+			key子元素：对方表中的外键列（多方的那个表）
+			
+			inverse属性:
+				默认为false，表示本方维护关联关系。
+				如果为true，表示本方不维护关联关系。
+				只是影响是否能设置外键列的值（设成有效值或是null值），对获取信息没有影响。
+				
+			cascade属性：
+				默认为none，代表不级联。
+				级联是指操作主对象时，对关联的对象也做相同的操作。
+				可设为：delete, save-update, all, none ...
+				
+			lazy属性：懒加载，默认为true。
+				true：懒加载，在第一次使用时加载。
+				false：立即加载，在获取本对象时就加载这个集合的所有元素。
+				extra：增强的懒加载策略。
+		-->
+		<set name="employees" cascade="all" lazy="true">
+			<key column="departmentId"></key>
+			<one-to-many class="Employee"/>
+		</set>
+		
+	</class>
+	
+</hibernate-mapping>

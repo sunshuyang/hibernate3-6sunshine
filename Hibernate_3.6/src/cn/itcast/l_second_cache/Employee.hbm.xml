@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.itcast.l_second_cache">
+	
+	<class name="Employee" table="employee">
+		<!-- 指定当前类要使用二级缓存 
+		<cache usage="read-write"/>
+		-->
+		<id name="id">
+        	<generator class="native"></generator>
+		</id>
+		<property name="name" type="string" column="name"/>
+		
+		<!-- department属性，表达的是本类与Department的多对一 -->
+		<many-to-one name="department" class="Department" column="departmentId"></many-to-one>
+		
+	</class>
+	
+</hibernate-mapping>

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.itcast.j_hbm_extends3">
+	
+	<!-- 采用每个具体类一张表的方式，抽象类不对应表。
+		abstract默认为false，设为true表示本类不对应表（类可以不是abstract的），这时就会忽略table属性。
+	 -->
+	<class name="Article" abstract="false" table="article3">
+		<id name="id">
+			<!-- 
+				当使用每个具体类一张表的方式时，主键生成策略不能是identity。
+				因为在整个继承结构中，主键值是不能重复的。
+			 -->
+        	<generator class="hilo">
+        		<param name="table">hi_value</param>
+                <param name="column">next_value</param>
+                <param name="max_lo">100</param>
+        	</generator>
+		</id>
+		<property name="title"/>
+		<property name="content" type="text" length="10000"/>
+		<property name="postTime" type="timestamp"/>
+		
+		
+		<!-- 子类：Topic -->
+		<union-subclass name="Topic" table="topic3">
+			<property name="type"></property>
+		</union-subclass>
+		
+		
+		<!-- 子类：Reply -->
+		<union-subclass name="Reply" table="reply3">
+			<property name="floor"></property>
+		</union-subclass>
+		
+	</class>
+	
+</hibernate-mapping>

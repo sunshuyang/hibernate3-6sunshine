@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="cn.itcast.j_hbm_extends2">
+	
+	<!-- 采用每个类一张表的方式，抽象类也对应表。 -->
+	<class name="Article" table="article2">
+		<id name="id">
+        	<generator class="native"/>
+		</id>
+		<property name="title"/>
+		<property name="content" type="text" length="10000"/>
+		<property name="postTime" type="timestamp"/>
+		
+		
+		<!-- 子类：Topic -->
+		<joined-subclass name="Topic" table="topic2">
+			<key column="id"></key>
+			<property name="type"></property>
+		</joined-subclass>
+		
+		
+		<!-- 子类：Reply -->
+		<joined-subclass name="Reply" table="reply2">
+			<key column="id"></key>
+			<property name="floor"></property>
+		</joined-subclass>
+		
+	</class>
+	
+</hibernate-mapping>
